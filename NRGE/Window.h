@@ -9,7 +9,7 @@ class Window {
 
 	//Methods
 public:
-	Window(const std::string &title, int width, int height);
+	Window(const std::string &title, int width, int height, int fontSize);
 	~Window();
 	inline bool isOpen() const { return _windowOpen; }
 	inline SDL_Renderer* getRenderer() const { return renderer; }
@@ -17,6 +17,9 @@ public:
 	inline int getWidth() const { return _width; }
 	void pollEvents();
 	void render() const;
+	void clear() const;
+	static TTF_Font* getFont();
+	static int getFontSize();
 
 private:
 	bool init();
@@ -29,5 +32,4 @@ private:
 	bool _windowOpen = false;
 	SDL_Window *window = nullptr;
 	SDL_Renderer *renderer = nullptr;
-
 };

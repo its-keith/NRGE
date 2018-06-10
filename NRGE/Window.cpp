@@ -1,9 +1,12 @@
 #include "Window.h"
 
+static TTF_Font *_font;
+static int _fontSize;
 
-Window::Window(const std::string &title, int width, int height) : 
-	_title(title), _width(width), _height(height) 
+Window::Window(const std::string &title, int width, int height, int fontSize) : 
+	_title(title), _width(width), _height(height)
 {
+	_fontSize = fontSize;
 	_windowOpen = init();
 }
 
@@ -22,6 +25,13 @@ bool Window::init() {
 
 	if (TTF_Init() != 0) {
 		Logging::Log("SDL_ttf failed to init");
+		return false;
+	}
+
+	_font = TTF_OpenFont("arial.ttf", _fontSize);
+
+	if (_font == nullptr) {
+		Logging::Log("Failed to load font");
 		return false;
 	}
 
@@ -64,4 +74,16 @@ void Window::pollEvents() {
 
 void Window::render() const {
 	SDL_RenderPresent(renderer);
+}
+
+void Window::clear() const {
+	SDL_RenderClear(renderer);
+}
+
+TTF_Font* Window::getFont() {
+	return _font;
+}
+
+int Window::getFontSize() {
+	return _fontSize;
 }

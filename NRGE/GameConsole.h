@@ -13,12 +13,11 @@ public:
 	~GameConsole();
 	void print(const std::string &message);
 	void print(const std::string &message, SDL_Color color);
+	void displayMessages();
 
 private:
 	std::deque<std::string> wrapText(const std::string &message);
-	void displayMessages();
-	void clearConsole();
-
+	
 	//Variables
 public:
 

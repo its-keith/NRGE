@@ -1,4 +1,5 @@
 #include "GameConsole.h"
+#include "Window.h"
 
 GameConsole::GameConsole(SDL_Renderer *ren, int x, int y, int w, int h, int fontSize) {
 	
@@ -20,7 +21,7 @@ GameConsole::GameConsole(SDL_Renderer *ren, int x, int y, int w, int h, int font
 		SDL_RenderFillRect(renderer, &lines[i]);
 	}
 
-	font = TTF_OpenFont("arial.ttf", fontSize);
+	font = Window::getFont();
 }
 
 GameConsole::~GameConsole() {
@@ -54,20 +55,13 @@ void GameConsole::print(const std::string &message, SDL_Color color) {
 		SDL_DestroyTexture(messages.back());
 		messages.pop_back();
 	}
-
-	displayMessages();
 }
 
 void GameConsole::displayMessages() {
-	clearConsole();
 	for (int i = 0; i < lineAmount && i < messages.size(); i++) {
 		SDL_QueryTexture(messages.at(i), NULL, NULL, &lines[i].w, &lines[i].h);
 		SDL_RenderCopy(renderer, messages.at(i), NULL, &lines[i]);
 	}
-}
-
-void GameConsole::clearConsole() {
-	SDL_RenderClear(renderer);
 }
 
 //At font size 20 and 1280x720 resolution (the default), can fit 126 characters (with no spaces) on one line.
